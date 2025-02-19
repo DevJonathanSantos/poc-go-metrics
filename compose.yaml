@@ -7,18 +7,20 @@ services:
     networks:
       - net
 
+  # Serviço do Prometheus (monitoramento)
   prometheus:
     image: prom/prometheus
     container_name: prometheus
     ports:
       - "9090:9090"
     command:
-      - --config.file=/etc/prometheus/prometheus.yml
+      - --config.file=/etc/prometheus/prometheus.yml # Especifica o arquivo de configuração do Prometheus
     volumes:
-      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro # Monta o arquivo de configuração do Prometheus no container (somente leitura)
     networks:
       - net
 
+  # Serviço do Grafana (visualização de métricas)
   grafana:
     image: grafana/grafana
     ports:
@@ -31,4 +33,4 @@ services:
 
 networks:
   net:
-    driver: bridge
+    driver: bridge # Usa o driver de rede "bridge" para comunicação entre containers

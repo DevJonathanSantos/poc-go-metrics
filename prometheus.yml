@@ -1,12 +1,15 @@
 global:
-  scrape_interval: 5s
-  evaluation_interval: 5s
+  scrape_interval: 5s # Intervalo padrão para coletar métricas de todos os alvos (a cada 5 segundos)
+  evaluation_interval: 5s # Intervalo para avaliar as regras de alerta (caso existam)
 
 scrape_configs:
-  - job_name: "prometheus"
-    scrape_interval: 5s
+  # Coletando métricas do próprio Prometheus
+  - job_name: "prometheus" # Nome do job no Prometheus
+    scrape_interval: 5s # Sobrescreve o intervalo de coleta para esse job específico (opcional)
     static_configs:
-      - targets: ["localhost:9090"]
-  - job_name: "app"
+      - targets: ["localhost:9090"] # O próprio Prometheus expõe métricas em localhost:9090
+
+  # Coletando métricas do seu aplicativo Go
+  - job_name: "app" # Nome do job para o seu aplicativo
     static_configs:
-      - targets: ["goapp:8080"]
+      - targets: ["goapp:8080"] # O Prometheus buscará métricas no serviço `goapp` na porta 8080
